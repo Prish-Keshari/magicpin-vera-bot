@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: sharan-merchant-bot
+    name: prish-merchant-bot
     runtime: docker
     plan: free
     dockerfilePath: ./Dockerfile
@@ -19,14 +19,14 @@ services:
       - key: LLM_API_KEY
         sync: false
       - key: BOT_TEAM_NAME
-        value: Sharan Vera Merchant Engine
+        value: Prish Keshari
       - key: BOT_TEAM_MEMBERS
-        value: Sharan K
+        value: Prish Keshari
       - key: BOT_MODEL
         value: llama-3.3-70b-versatile
       - key: BOT_APPROACH
         value: Hybrid Groq composer with deterministic templates, playbooks, and hydration fallbacks
       - key: BOT_CONTACT_EMAIL
-        value: YOUR_EMAIL@gmail.com
+        value: pppm123457@gmail.com
       - key: BOT_VERSION
         value: "1.0.0"
