@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: sharan-merchant-bot
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /v1/healthz
+    envVars:
+      - key: LLM_PROVIDER
+        value: groq
+      - key: LLM_MODEL
+        value: llama-3.3-70b-versatile
+      - key: LLM_FALLBACK_MODEL
+        value: llama-3.1-8b-instant
+      - key: LLM_SEED
+        value: "20260426"
+      - key: LLM_TIMEOUT_SECONDS
+        value: "8"
+      - key: LLM_API_KEY
+        sync: false
+      - key: BOT_TEAM_NAME
+        value: Sharan Vera Merchant Engine
+      - key: BOT_TEAM_MEMBERS
+        value: Sharan K
+      - key: BOT_MODEL
+        value: llama-3.3-70b-versatile
+      - key: BOT_APPROACH
+        value: Hybrid Groq composer with deterministic templates, playbooks, and hydration fallbacks
+      - key: BOT_CONTACT_EMAIL
+        value: YOUR_EMAIL@gmail.com
+      - key: BOT_VERSION
+        value: "1.0.0"

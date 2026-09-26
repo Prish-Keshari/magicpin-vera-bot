@@ -1,0 +1,10 @@
+SAME: dataset\customers_seed.json
+SAME: dataset\merchants_seed.json
+SAME: dataset\triggers_seed.json
+SAME: dataset\generate_dataset.py
+SAME: dataset\categories\dentists.json
+SAME: dataset\categories\gyms.json
+SAME: dataset\categories\pharmacies.json
+SAME: dataset\categories\restaurants.json
+SAME: dataset\categories\salons.json
+

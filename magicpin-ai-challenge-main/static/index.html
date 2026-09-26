@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vera Bot Dashboard — Magicpin AI Challenge</title>
+  <meta name="description" content="Interactive dashboard for Vera, the magicpin merchant AI WhatsApp assistant. Browse merchants, compose messages, simulate conversations, and view submissions.">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+  <!-- ═══ Sidebar ═══ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="logo">V</div>
+      <div>
+        <h1>Vera Bot</h1>
+        <small>magicpin AI Challenge</small>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active" data-panel="overview">
+        <span class="icon">📊</span> Overview
+      </div>
+      <div class="nav-item" data-panel="submissions">
+        <span class="icon">📝</span> Submissions
+      </div>
+      <div class="nav-item" data-panel="merchants">
+        <span class="icon">🏪</span> Merchant Explorer
+      </div>
+      <div class="nav-item" data-panel="composer">
+        <span class="icon">✨</span> Message Composer
+      </div>
+      <div class="nav-item" data-panel="chat">
+        <span class="icon">💬</span> Conversation Sim
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div style="display:flex;align-items:center;gap:6px;">
+        <span class="pulse-dot"></span> Bot Online
+      </div>
+    </div>
+  </aside>
+
+  <!-- ═══ Main ═══ -->
+  <div class="main">
+
+    <!-- ───── Overview Panel ───── -->
+    <section class="panel active" id="panel-overview">
+      <div class="page-header">
+        <h2>Dashboard Overview</h2>
+        <p>Real-time health, team info, and architecture of the Vera bot engine</p>
+      </div>
+      <div class="page-content">
+        <div class="stat-grid" id="stat-grid">
+          <div class="stat-card">
+            <div class="stat-icon">🏢</div>
+            <div class="stat-value" id="s-categories">—</div>
+            <div class="stat-label">Categories</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🏪</div>
+            <div class="stat-value" id="s-merchants">—</div>
+            <div class="stat-label">Merchants</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">👤</div>
+            <div class="stat-value" id="s-customers">—</div>
+            <div class="stat-label">Customers</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⚡</div>
+            <div class="stat-value" id="s-triggers">—</div>
+            <div class="stat-label">Triggers</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⏱️</div>
+            <div class="stat-value" id="s-uptime">—</div>
+            <div class="stat-label">Uptime (s)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📝</div>
+            <div class="stat-value">30</div>
+            <div class="stat-label">Test Pairs</div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <div class="card-header"><h3>🛡️ Team & Model</h3></div>
+            <table class="info-table" id="team-table">
+              <tr><td>Team</td><td id="m-team">—</td></tr>
+              <tr><td>Members</td><td id="m-members">—</td></tr>
+              <tr><td>Model</td><td id="m-model">—</td></tr>
+              <tr><td>Approach</td><td id="m-approach">—</td></tr>
+              <tr><td>Version</td><td id="m-version">—</td></tr>
+              <tr><td>Contact</td><td id="m-contact">—</td></tr>
+            </table>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>🏗️ Architecture</h3></div>
+            <div class="arch-box">
+┌──────────────┐
+│  bot.py      │ FastAPI endpoints
+│  ├ /v1/tick  │ proactive sends
+│  ├ /v1/reply │ multi-turn handler
+│  └ /v1/ctx   │ context receiver
+└──────┬───────┘
+       │
+  ┌────▼────────────────────┐
+  │  composer.py            │
+  │  LLM + validation +     │
+  │  template fallback       │
+  └─────┬──────────┬────────┘
+        │          │
+  ┌─────▼──┐  ┌───▼──────────┐
+  │signals │  │ templates.py │
+  │  .py   │  │ 25+ fallbacks│
+  └────────┘  └──────────────┘
+        │
+  ┌─────▼────────┐
+  │ playbooks.py │
+  │ kind→strategy│
+  └──────────────┘</div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:24px">
+          <div class="card-header"><h3>🧱 Module Map</h3></div>
+          <table class="info-table">
+            <tr><td><code>bot.py</code></td><td>FastAPI — all 5 judge-facing endpoints + dashboard</td></tr>
+            <tr><td><code>composer.py</code></td><td>Hybrid LLM + validation + deterministic fallback</td></tr>
+            <tr><td><code>templates.py</code></td><td>25+ trigger-specific deterministic message templates</td></tr>
+            <tr><td><code>conversation.py</code></td><td>Multi-turn reply: auto-reply, intent commit, hostile exit</td></tr>
+            <tr><td><code>signals.py</code></td><td>Grounded facts extraction — zero hallucination</td></tr>
+            <tr><td><code>playbooks.py</code></td><td>Per-trigger-kind strategy: CTA, voice, mandatory facts</td></tr>
+            <tr><td><code>semantic_compat.py</code></td><td>Cross-domain firewall (no pharmacy triggers on restaurants)</td></tr>
+            <tr><td><code>hydration.py</code></td><td>Null-safe helpers — prevents broken sentences</td></tr>
+            <tr><td><code>llm_provider.py</code></td><td>Groq primary, multi-provider fallback chain</td></tr>
+            <tr><td><code>state.py</code></td><td>Thread-safe in-memory store for contexts + conversations</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───── Submissions Panel ───── -->
+    <section class="panel" id="panel-submissions">
+      <div class="page-header">
+        <h2>Submission Viewer</h2>
+        <p>30 test-pair messages from <code>submission.jsonl</code> — scored by the AI judge</p>
+      </div>
+      <div class="page-content">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="sub-search" placeholder="Search submissions by body, rationale, or test ID...">
+        </div>
+        <div class="sub-grid" id="sub-grid">
+          <div class="empty-state">
+            <div class="empty-icon">📄</div>
+            <h3>Loading submissions...</h3>
+            <div class="spinner" style="margin-top:12px"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───── Merchant Explorer ───── -->
+    <section class="panel" id="panel-merchants">
+      <div class="page-header">
+        <h2>Merchant Explorer</h2>
+        <p>Browse loaded merchants — push contexts via <code>POST /v1/context</code> first</p>
+      </div>
+      <div class="page-content">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="merchant-search" placeholder="Search merchants by name, city, or category...">
+        </div>
+        <div id="merchant-list-view">
+          <div class="merchant-grid" id="merchant-grid"></div>
+        </div>
+        <div id="merchant-detail-view" style="display:none"></div>
+      </div>
+    </section>
+
+    <!-- ───── Composer Panel ───── -->
+    <section class="panel" id="panel-composer">
+      <div class="page-header">
+        <h2>Message Composer</h2>
+        <p>Pick a merchant + trigger → generate a Vera message with full rationale</p>
+      </div>
+      <div class="page-content">
+        <div class="two-col">
+          <div class="card">
+            <div class="card-header"><h3>📥 Input</h3></div>
+            <div class="form-group">
+              <label>Merchant</label>
+              <select class="form-select" id="compose-merchant">
+                <option value="">— select merchant —</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Trigger</label>
+              <select class="form-select" id="compose-trigger">
+                <option value="">— select trigger —</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Customer (optional)</label>
+              <select class="form-select" id="compose-customer">
+                <option value="">— none —</option>
+              </select>
+            </div>
+            <button class="btn" id="compose-btn" disabled>
+              ✨ Compose Message
+            </button>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>📤 Output</h3></div>
+            <div id="compose-output">
+              <div class="empty-state">
+                <div class="empty-icon">✨</div>
+                <h3>Select a merchant & trigger, then compose</h3>
+                <p style="color:var(--text-muted);font-size:0.85rem">The result will appear here with full rationale</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───── Conversation Simulator ───── -->
+    <section class="panel" id="panel-chat">
+      <div class="page-header">
+        <h2>Conversation Simulator</h2>
+        <p>Simulate a merchant reply and see how Vera responds — multi-turn handler in action</p>
+      </div>
+      <div class="page-content">
+        <div class="two-col">
+          <div>
+            <div class="card" style="margin-bottom:16px">
+              <div class="card-header"><h3>⚙️ Setup</h3></div>
+              <div class="form-group">
+                <label>Conversation ID</label>
+                <input class="form-input" id="chat-conv-id" value="conv_demo_001" />
+              </div>
+              <div class="form-group">
+                <label>Merchant ID</label>
+                <input class="form-input" id="chat-merchant-id" value="m_001_drmeera" />
+              </div>
+              <button class="btn btn-secondary" id="chat-reset">🔄 Reset Chat</button>
+            </div>
+            <div class="card">
+              <div class="card-header"><h3>💡 Try These</h3></div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <div class="quick-msg" data-msg="Thank you for contacting us! Our team will respond shortly.">🤖 Auto-reply test</div>
+                <div class="quick-msg" data-msg="Ok lets do it. Go ahead!">✅ Intent commitment</div>
+                <div class="quick-msg" data-msg="Stop messaging me. This is spam.">🛑 Hostile opt-out</div>
+                <div class="quick-msg" data-msg="Can you help me file my GST?">❓ Off-topic question</div>
+                <div class="quick-msg" data-msg="We already have that offer running.">📢 Already-have objection</div>
+                <div class="quick-msg" data-msg="Yes">👍 Short affirm</div>
+              </div>
+            </div>
+          </div>
+          <div class="chat-container">
+            <div class="chat-header">
+              <div class="chat-avatar">V</div>
+              <div>
+                <div class="chat-name">Vera Bot</div>
+                <div class="chat-status">● online</div>
+              </div>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+              <div class="chat-bubble vera">
+                <div class="bubble-label">Vera</div>
+                Send a merchant reply to start the conversation...
+                <div class="bubble-time">now</div>
+              </div>
+            </div>
+            <div class="chat-input-area">
+              <input type="text" id="chat-input" placeholder="Type a merchant reply..." />
+              <button class="send-btn" id="chat-send">➤</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
