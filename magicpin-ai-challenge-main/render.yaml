@@ -1,6 +1,7 @@
 services:
   - type: web
     name: prish-merchant-bot
+    rootDir: magicpin-ai-challenge-main
     runtime: docker
     plan: free
     dockerfilePath: ./Dockerfile
